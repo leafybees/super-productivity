@@ -25,6 +25,8 @@ export type KeyboardConfig = Readonly<{
   zoomOut?: string | null;
   zoomDefault?: string | null;
   triggerSync?: string | null;
+  navigateUp?: string | null;
+  navigateDown?: string | null;
 
   taskEditTitle?: string | null;
   taskToggleDetailPanelOpen?: string | null;

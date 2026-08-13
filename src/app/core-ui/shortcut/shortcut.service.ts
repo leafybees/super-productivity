@@ -74,6 +74,20 @@ export class ShortcutService {
   private _isNoteTaskHandoffPending = false;
   private _taskViewCustomizerService = inject(TaskViewCustomizerService);
 
+  private simulateArrowKey(ev: Event, key: 'ArrowUp' | 'ArrowDown'): void {
+    const target = document.activeElement || document.body;
+
+    const arrowKeyEvent = new KeyboardEvent('keydown', {
+      key: key,
+      code: key,
+      bubbles: true,
+      cancelable: true,
+      view: window,
+    });
+
+    target.dispatchEvent(arrowKeyEvent);
+  }
+
   isCtrlPressed$: Observable<boolean> = fromEvent(document, 'keydown').pipe(
     switchMap((ev: Event) => {
       const e = ev as KeyboardEvent;
@@ -240,6 +254,12 @@ export class ShortcutService {
       this._router.navigate(['/active/tasks'], {
         queryParams: { backlogPos },
       });
+    } else if (checkKeyCombo(ev, keys.navigateDown)) {
+      ev.preventDefault();
+      this.simulateArrowKey(ev, 'ArrowDown');
+    } else if (checkKeyCombo(ev, keys.navigateUp)) {
+      ev.preventDefault();
+      this.simulateArrowKey(ev, 'ArrowUp');
     } else if (checkKeyCombo(ev, keys.goToFocusMode) && this.isFocusModeEnabled()) {
       this._store.dispatch(showFocusOverlay());
     } else if (checkKeyCombo(ev, keys.goToWorkView)) {

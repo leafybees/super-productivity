@@ -2745,6 +2745,8 @@
       "MOVE_TASK_TO_TOP": "Move task to the top of the list",
       "MOVE_TASK_UP": "Move task up in the list",
       "MOVE_TO_BACKLOG": "Move task to project backlog",
+      "NAVIGATE_UP": "Navigate up",
+      "NAVIGATE_DOWN": "Navigate down",
       "OPEN_PROJECT_NOTES": "Show/hide notes",
       "PLUGIN_SHORTCUTS": "Plugin Shortcuts",
       "SELECT_NEXT_TASK": "Select next task",

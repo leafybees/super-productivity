@@ -45,6 +45,8 @@ export const KEYBOARD_SETTINGS_FORM_CFG: ConfigFormSection<KeyboardConfig> = {
       : []),
     // APP WIDE
     subSectionHeading(T.GCF.KEYBOARD.APP_WIDE_SHORTCUTS),
+    kbField('navigateDown', T.GCF.KEYBOARD.NAVIGATE_DOWN),
+    kbField('navigateUp', T.GCF.KEYBOARD.NAVIGATE_UP),
     kbField('addNewTask', T.GCF.KEYBOARD.ADD_NEW_TASK),
     kbField('addNewProject', T.GCF.KEYBOARD.ADD_NEW_PROJECT),
     kbField('addNewNote', T.GCF.KEYBOARD.ADD_NEW_NOTE),
