@@ -362,9 +362,9 @@ export class PageTitleComponent {
   });
 
   constructor() {
-    this.taskViewCustomizerService.toggleMenuRequest$
+    this.taskViewCustomizerService.openMenuRequest$
       .pipe(takeUntilDestroyed())
-      .subscribe(() => this._customizerMenuTrigger()?.toggleMenu());
+      .subscribe(() => this._customizerMenuTrigger()?.openMenu());
   }
 
   // Get data directly from services instead of inputs

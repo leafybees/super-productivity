@@ -30,7 +30,7 @@ describe('ShortcutService', () => {
   let mockMatDialog: any;
   let mockPluginBridgeService: any;
   let mockLayoutService: any;
-  let mockTaskViewCustomizerService: { requestToggleMenu: jasmine.Spy };
+  let mockTaskViewCustomizerService: { requestOpenMenu: jasmine.Spy };
 
   beforeEach(() => {
     mockMatDialog = {
@@ -46,7 +46,7 @@ describe('ShortcutService', () => {
         .and.returnValue(false),
     };
     mockTaskViewCustomizerService = {
-      requestToggleMenu: jasmine.createSpy('requestToggleMenu'),
+      requestOpenMenu: jasmine.createSpy('requestOpenMenu'),
     };
     mockRouter = {
       navigate: jasmine.createSpy('navigate'),
@@ -109,13 +109,13 @@ describe('ShortcutService', () => {
   });
 
   describe('handleKeyDown', () => {
-    it('should toggle the header filter menu on the filter shortcut', async () => {
+    it('should open the header filter menu on the filter shortcut', async () => {
       const ev = new KeyboardEvent('keydown', { key: 'c', code: 'KeyC' });
       Object.defineProperty(ev, 'target', { value: document.body });
 
       await service.handleKeyDown(ev);
 
-      expect(mockTaskViewCustomizerService.requestToggleMenu).toHaveBeenCalledTimes(1);
+      expect(mockTaskViewCustomizerService.requestOpenMenu).toHaveBeenCalledTimes(1);
     });
 
     it('should NOT navigate to schedule if TaskShortcutService handled Shift+S', () => {

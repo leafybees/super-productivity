@@ -50,7 +50,7 @@ describe('PageTitleComponent', () => {
   let activeWorkContext$: BehaviorSubject<WorkContext>;
   let isShared$: BehaviorSubject<boolean>;
   let isXxxs$: BehaviorSubject<{ matches: boolean }>;
-  let toggleMenuRequest$: Subject<void>;
+  let openMenuRequest$: Subject<void>;
   let openSpy: jasmine.Spy;
   let pluginMenuEntries: WritableSignal<PluginMenuEntryCfg[]>;
   let pluginStates: Map<string, PluginState>;
@@ -87,7 +87,7 @@ describe('PageTitleComponent', () => {
     },
     {
       provide: TaskViewCustomizerService,
-      useValue: { isCustomized: () => false, toggleMenuRequest$ },
+      useValue: { isCustomized: () => false, openMenuRequest$ },
     },
     {
       provide: PluginBridgeService,
@@ -133,7 +133,7 @@ describe('PageTitleComponent', () => {
     pluginMenuEntries = signal<PluginMenuEntryCfg[]>([]);
     pluginStates = new Map();
     isXxxs$ = new BehaviorSubject<{ matches: boolean }>({ matches: false });
-    toggleMenuRequest$ = new Subject<void>();
+    openMenuRequest$ = new Subject<void>();
     openSpy = jasmine
       .createSpy('openProjectOnPlainspace')
       .and.returnValue(Promise.resolve());
@@ -460,22 +460,22 @@ describe('PageTitleComponent', () => {
     // The filter shortcut used to toggle a layout-state side panel that no
     // longer had anything to show; it must drive this button's menu instead.
     describe('the filter shortcut', () => {
-      let toggleSpy: jasmine.Spy;
+      let openMenuSpy: jasmine.Spy;
 
       beforeEach(() => {
-        toggleSpy = spyOn(MatMenuTrigger.prototype, 'toggleMenu');
+        openMenuSpy = spyOn(MatMenuTrigger.prototype, 'openMenu');
       });
 
-      it('toggles the filter menu on the work view', async () => {
+      it('opens the filter menu on the work view', async () => {
         await renderAt('/active/tasks');
-        toggleMenuRequest$.next();
-        expect(toggleSpy).toHaveBeenCalledTimes(1);
+        openMenuRequest$.next();
+        expect(openMenuSpy).toHaveBeenCalledTimes(1);
       });
 
       it('does nothing where the filter button is not rendered', async () => {
         await renderAt('/active/notes');
-        toggleMenuRequest$.next();
-        expect(toggleSpy).not.toHaveBeenCalled();
+        openMenuRequest$.next();
+        expect(openMenuSpy).not.toHaveBeenCalled();
       });
     });
   });

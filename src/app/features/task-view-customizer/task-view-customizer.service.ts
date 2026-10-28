@@ -97,12 +97,12 @@ export class TaskViewCustomizerService {
   public collapsedGroupIds = signal<string[]>([]);
 
   // The customizer is a menu anchored to the header's filter button, so the
-  // keyboard shortcut can only ask that button to toggle it.
-  private readonly _toggleMenuRequest$ = new Subject<void>();
-  readonly toggleMenuRequest$ = this._toggleMenuRequest$.asObservable();
+  // keyboard shortcut can only ask that button to open it.
+  private readonly _openMenuRequest$ = new Subject<void>();
+  readonly openMenuRequest$ = this._openMenuRequest$.asObservable();
 
-  requestToggleMenu(): void {
-    this._toggleMenuRequest$.next();
+  requestOpenMenu(): void {
+    this._openMenuRequest$.next();
   }
 
   isCustomized = computed(() => {

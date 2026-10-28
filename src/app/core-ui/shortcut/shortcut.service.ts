@@ -324,7 +324,7 @@ export class ShortcutService {
       this._layoutService.toggleNotes();
     } else if (checkKeyCombo(ev, keys.toggleTaskViewCustomizerPanel)) {
       ev.preventDefault();
-      this._taskViewCustomizerService.requestToggleMenu();
+      this._taskViewCustomizerService.requestOpenMenu();
     } else if (checkKeyCombo(ev, keys.toggleIssuePanel)) {
       ev.preventDefault();
       this._layoutService.toggleAddTaskPanel();

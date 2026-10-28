@@ -2778,7 +2778,7 @@
       "TOGGLE_PLAY": "Start/stop time tracking for task",
       "TOGGLE_SIDE_NAV": "Focus sidenav",
       "TOGGLE_SIDE_NAV_MODE": "Toggle sidebar compact/full mode",
-      "TOGGLE_TASK_VIEW_CUSTOMIZER_PANEL": "Toggle filter/group/sort panel",
+      "TOGGLE_TASK_VIEW_CUSTOMIZER_PANEL": "Open filter/group/sort menu",
       "TRIGGER_SYNC": "Trigger sync (if configured)",
       "ZOOM_DEFAULT": "Zoom default (desktop only)",
       "ZOOM_IN": "Zoom in (desktop only)",
