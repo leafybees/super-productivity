@@ -22,7 +22,7 @@ import {
   ActiveWorkContext,
   Task,
 } from './plugin-api.model';
-import { toActiveWorkContext } from './util/active-work-context.util';
+import { PluginWorkContextService } from './plugin-work-context.service';
 import {
   assertPluginPersistenceKey,
   composeId,
@@ -59,7 +59,7 @@ import { WorkContextService } from '../features/work-context/work-context.servic
 import { ProjectService } from '../features/project/project.service';
 import { INBOX_PROJECT } from '../features/project/project.const';
 import { TagService } from '../features/tag/tag.service';
-import { distinctUntilChanged, first, map, take, timeout } from 'rxjs/operators';
+import { distinctUntilChanged, first, map, take } from 'rxjs/operators';
 import { firstValueFrom } from 'rxjs';
 import { selectProjectFeatureState } from '../features/project/store/project.selectors';
 import { selectNoteFeatureState } from '../features/note/store/note.reducer';
@@ -153,6 +153,7 @@ export class PluginBridgeService implements OnDestroy {
   private _workContextService = inject(WorkContextService);
   private _projectService = inject(ProjectService);
   private _tagService = inject(TagService);
+  private _pluginWorkContext = inject(PluginWorkContextService);
   private _pluginUserPersistenceService = inject(PluginUserPersistenceService);
   private _pluginConfigService = inject(PluginConfigService);
   private _taskArchiveService = inject(TaskArchiveService);
@@ -259,6 +260,7 @@ export class PluginBridgeService implements OnDestroy {
     showInWorkContext: () => void;
     closeWorkContextView: () => void;
     getActiveWorkContext: () => Promise<ActiveWorkContext | null>;
+    openWorkContext: (id: string, type: ActiveWorkContext['type']) => Promise<void>;
     getSelectedTask: () => Promise<TaskCopy | null>;
     getFocusedTask: () => Promise<TaskCopy | null>;
     triggerSync: () => Promise<void>;
@@ -334,6 +336,8 @@ export class PluginBridgeService implements OnDestroy {
       showInWorkContext: () => this._showInWorkContext(pluginId),
       closeWorkContextView: () => this._closeWorkContextView(pluginId),
       getActiveWorkContext: () => this.getActiveWorkContext(),
+      openWorkContext: (id: string, type: ActiveWorkContext['type']) =>
+        this._pluginWorkContext.openWorkContext(id, type),
       getSelectedTask: () => this.getSelectedTask(),
       getFocusedTask: () => this.getFocusedTask(),
 
@@ -732,27 +736,8 @@ export class PluginBridgeService implements OnDestroy {
     }
   }
 
-  /**
-   * Snapshot of the active work context for plugins. A context is always
-   * active once the app has loaded — it stays set even on non-work-view
-   * routes — so this normally resolves to that context. It resolves to
-   * null only if the initial data load has not completed within the
-   * timeout (e.g. a plugin calling this very early from its init hook),
-   * which is preferable to a Promise that never resolves.
-   */
-  async getActiveWorkContext(): Promise<ActiveWorkContext | null> {
-    try {
-      const ctx = await firstValueFrom(
-        this._workContextService.activeWorkContext$.pipe(
-          // 10s is well past normal data-load time but still bounded so
-          // a plugin can fall back to other behaviour instead of hanging.
-          timeout({ first: 10_000 }),
-        ),
-      );
-      return toActiveWorkContext(ctx);
-    } catch {
-      return null;
-    }
+  getActiveWorkContext(): Promise<ActiveWorkContext | null> {
+    return this._pluginWorkContext.getActiveWorkContext();
   }
 
   /**

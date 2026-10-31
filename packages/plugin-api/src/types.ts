@@ -600,6 +600,15 @@ export interface PluginAPI {
   getActiveWorkContext(): Promise<ActiveWorkContext | null>;
 
   /**
+   * Navigate the app to a project's or tag's task list, as clicking it in the
+   * side nav does. `type` uses the {@link ActiveWorkContext} vocabulary, so the
+   * result of `getActiveWorkContext()` can be passed back; `'TODAY'` requires
+   * the id `'TODAY'`. Archived and hidden projects can be opened. Rejects when
+   * no project or tag has that id.
+   */
+  openWorkContext(id: string, type: ActiveWorkContext['type']): Promise<void>;
+
+  /**
    * Mount this plugin's index.html inside the work-view body, in place of
    * the task list.
    *

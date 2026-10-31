@@ -201,6 +201,11 @@ export class PluginAPI implements PluginAPIInterface {
     return this.#boundMethods.getActiveWorkContext();
   }
 
+  async openWorkContext(id: string, type: ActiveWorkContext['type']): Promise<void> {
+    PluginLog.log(`Plugin ${this.#pluginId} requested to open a work context`);
+    return this.#boundMethods.openWorkContext(id, type);
+  }
+
   async getTasks(): Promise<Task[]> {
     PluginLog.log(`Plugin ${this.#pluginId} requested all tasks`);
     const tasks = await this.#pluginBridge.getTasks();

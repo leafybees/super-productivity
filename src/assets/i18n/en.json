@@ -3459,6 +3459,7 @@
     "SETUP_ISSUE_PROVIDER": "Set up in Issue Provider Panel",
     "SIDE_PANEL_LABEL_REQUIRED": "Side panel button label is required",
     "SIDE_PANEL_ONCLICK_REQUIRED": "Side panel button onClick handler is required",
+    "TAG_NOT_FOUND": "Tag \"{{contextId}}\" not found",
     "TAGS_DO_NOT_EXIST": "One or more tags do not exist",
     "TASK_NOT_FOUND": "Task with ID \"{{taskId}}\" not found",
     "TASKS_NOT_IN_PROJECT": "One or more tasks are not in project \"{{contextId}}\"",
